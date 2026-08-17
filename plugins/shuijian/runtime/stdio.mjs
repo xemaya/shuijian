@@ -20322,7 +20322,8 @@ var FORBIDDEN_MOVE_PATTERNS = [
   /这是你的课题/u,
   /你着相了/u,
   /提高格局|保持正能量|成功人士/u,
-  /(?:抑郁症|焦虑症|人格障碍|创伤后应激)/u
+  /(?:抑郁症|焦虑症|人格障碍|创伤后应激)/u,
+  /实际发生的是|目前能确定的是|未知的是|你接上去的故事是|你接上的那段是/u
 ];
 var QUESTION_KINDS = /* @__PURE__ */ new Set(["clarify", "ask_one_question"]);
 var validateCandidateMove = (move, allowedKinds) => {

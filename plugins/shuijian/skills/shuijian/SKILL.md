@@ -14,7 +14,7 @@ description: 当用户被一件工作、关系、失败、身份或选择困住�
 - 保存“这件事确实很难受”与“由此推出的结论”之间的区别。
 - 不讲标准答案，不用佛学术语给用户贴标签，不说“你着相了”。
 - 不把真实约束拆成想象，不把证据不足说成用户想多了。
-- Tool 返回的 `candidateMove` 已经过九字核心校验。直接自然表达它，不另加第二个动作。
+- Tool 返回的 `candidateMove.text` 已经是面向用户的成句并经过九字核心校验。成功后逐字输出，不改写、不重排、不加前后句。
 
 ## 人感优先
 
@@ -60,6 +60,7 @@ description: 当用户被一件工作、关系、失败、身份或选择困住�
 5. 读取 stdout 的 `ShuijianToolResult`，只自然表达 `candidateMove`；不向用户展示状态文件、claim ID 或工程字段。
 6. 用户要求删除当前水鉴记录时，调用：`node <work.mjs> clear --state <state.json>`。
 7. 同一任务始终复用同一个 `state.json`。若返回 `SESSION_NOT_FOUND`，可省略旧 `sessionId`与`ledgerVersion`重试一次，但必须把本轮 `derivedFrom`引用的来源 claim 一并重建；不得留下指向旧会话的悬空 ID，也不要向用户播报恢复过程。
+8. runner 不提供 `--help`。完整输入契约就在 [tool-use.md](references/tool-use.md)；不要试跑 `--help`，不要 grep 或读取打包后的 `work.mjs`猜 schema。
 
 若当前宿主不能执行随 Skill 分发的脚本，不得伪造 Tool 已运行。此时可以保持水鉴姿态进行普通承接，但需要 Tool 校验的动作应等待可执行宿主，或使用已明确配置的兼容 adapter。
 
@@ -70,7 +71,7 @@ description: 当用户被一件工作、关系、失败、身份或选择困住�
 1. `userText`传本轮用户原话，不传你的概括。
 2. `claims`只写能追到用户原话或最小上下文的内容；你的推断不能伪装成用户确认。`proposedMove`也必须遵守同一边界，不能在给用户的话里偷偷加上未确认的情绪或动机。
 3. 重要推论通过 `derivedFrom`指向来源 claim。
-4. `proposedMove`由你根据当前原话写成一句自然回应；九字核心负责校验类型、许可、安全与证据，不会调用第二个模型。
+4. `proposedMove`由你根据当前原话写成一句自然回应；九字核心负责校验类型、许可、安全与证据，不会调用第二个模型。成功后逐字输出返回的 `candidateMove.text`。
 5. 继续同一段对话时，带回上一 Tool 返回的 `sessionId`与 `ledgerVersion`。
 6. 同一意图重试时复用 `requestId`；输入含义变化时换新 ID。
 7. `waitForUser: true`时，表达 `candidateMove`后立即停下。
