@@ -1,0 +1,33 @@
+{
+  "name": "shuijian",
+  "version": "0.1.0+codex.20260817100338",
+  "description": "\u5148\u542c\u7528\u6237\u8bf4\uff0c\u518d\u628a\u4e8b\u5b9e\u3001\u63a8\u8bba\u3001\u672a\u77e5\u4e0e\u771f\u5b9e\u7ea6\u675f\u6162\u6162\u7167\u6e05\u3002",
+  "author": {
+    "name": "\u73c2\u5c91 \u5218"
+  },
+  "keywords": [
+    "reflection",
+    "evidence",
+    "companion",
+    "\u6c34\u9274"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "\u6c34\u9274",
+    "shortDescription": "\u628a\u56f0\u4f4f\u81ea\u5df1\u7684\u6545\u4e8b\uff0c\u6162\u6162\u7167\u56de\u4e8b\u5b9e",
+    "longDescription": "\u4e00\u4e2a\u514b\u5236\u7684\u5bf9\u8bdd\u642d\u5b50\uff1a\u5148\u627f\u63a5\u6b63\u5728\u53d1\u751f\u7684\u4e8b\uff0c\u518d\u5206\u6e05\u539f\u8bdd\u3001\u4f53\u9a8c\u3001\u63a8\u8bba\u3001\u672a\u77e5\u4e0e\u771f\u5b9e\u7ea6\u675f\uff1b\u9700\u8981\u65f6\u53ea\u8f7b\u6572\u4e00\u5904\uff0c\u4e0d\u66ff\u4f60\u4e0b\u7ed3\u8bba\u3002",
+    "developerName": "\u73c2\u5c91 \u5218",
+    "category": "Productivity",
+    "capabilities": [
+      "ChatGPT Work sandbox tools",
+      "Task-only evidence ledger"
+    ],
+    "defaultPrompt": [
+      "\u6709\u4ef6\u4e8b\u4e00\u76f4\u5361\u7740\u6211\uff0c\u5148\u542c\u6211\u8bf4\u8bf4\u3002",
+      "\u5e2e\u6211\u5206\u6e05\u8fd9\u91cc\u9762\u54ea\u4e9b\u662f\u4e8b\u5b9e\uff0c\u54ea\u4e9b\u662f\u6211\u63a5\u4e0a\u53bb\u7684\u6545\u4e8b\u3002",
+      "\u6211\u5927\u6982\u770b\u6e05\u4e86\uff0c\u5e2e\u6211\u6536\u5728\u8fd9\u91cc\u3002"
+    ],
+    "brandColor": "#6F8078"
+  },
+  "mcpServers": "./.mcp.json"
+}

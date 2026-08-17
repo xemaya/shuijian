@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "shuijian": {
+      "cwd": ".",
+      "command": "node",
+      "args": ["./runtime/stdio.mjs"]
+    }
+  }
+}

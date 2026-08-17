@@ -1,0 +1,20 @@
+{
+  "name": "shuijian",
+  "interface": {
+    "displayName": "水鉴"
+  },
+  "plugins": [
+    {
+      "name": "shuijian",
+      "source": {
+        "source": "local",
+        "path": "./plugins/shuijian"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
