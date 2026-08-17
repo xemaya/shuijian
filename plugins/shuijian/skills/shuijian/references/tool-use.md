@@ -28,7 +28,7 @@ runner 没有 `--help`命令。不要运行 `--help`，也不要读取或 grep `
 - `locate_dwelling`：`claims`必填；`kind = reflect_chain | ask_permission`。
 - `deconstruct_claim`：`targetClaim`、`supportingClaims`、`allowedInterventions`必填；`kind = ask_one_question`。`allowedInterventions`可选值：`change_subject | change_time | change_scale | alternative_explanation | boundary_counterexample | reverse_test | identity_separation | responsibility_split`。
 - `verify_evidence`：`targetClaim`、`evidenceState`必填；`evidenceFor`、`evidenceAgainst`、`realConstraints`、`unknowns`传数组；`kind = state_uncertainty | clarify | reflect_chain`。它没有顶层 `claims`字段；`targetClaim.derivedFrom`引用的来源 claim 必须放进上述四个数组之一。
-- `cut_narrative_chain`：`claims`、`edges`、`supportedUntilClaimId`、`pauseAfterClaimId`必填；edge 为`{ id?, fromClaimId, toClaimId, relation, evidenceState, cutStatus? }`；`kind = reflect_chain | pause`。
+- `cut_narrative_chain`：`claims`、`edges`、`supportedUntilClaimId`、`pauseAfterClaimId`必填；edge 为`{ id?, fromClaimId, toClaimId, relation, evidenceState, cutStatus? }`；`kind = reflect_chain | pause`。必须存在一条 edge，其 `fromClaimId`等于 `supportedUntilClaimId`、`toClaimId`等于 `pauseAfterClaimId`；两个端点不能填成同一个 claim。
 - `loosen_identity`：`identityClaim`、`userInitiatedQuestion`必填；`kind = ask_one_question | pause`。
 - `surface_next_response`：`claims`传数组，`responses`必填且为 1–3 个`{ kind, text }`；response kind 可选`action | rest | conversation | boundary | information | wait | no_decision`；`proposedMove.kind = surface_options`。
 - `stop_session`：`reason`必填，可选`user_request | enough_clarity | repetition | needs_reality | safety | no_value_added`；`kind = pause | close`。
@@ -41,6 +41,7 @@ runner 没有 `--help`命令。不要运行 `--help`，也不要读取或 grep `
 - `照`与`验`：前者缺原始材料；后者已有具体 claim，正在衡量证据边界。
 - `住`与`拆`：前者指出可能卡在哪里；后者在获得许可后检查一条明确推论。
 - `拆`与`断`：前者问一个能让用户自己回答的问题；后者暂停一条已画出的无依据连接。
+- `验`与`断`：第一次要求分清事实与故事时选`验`；只有证据边界已经照清、同一推演仍在继续时才选`断`。
 - `验`与`生`：前者先守住真实约束和未知；后者才展开一至三个回应空间。
 - 任意 Tool 与`止`：没有新增价值、用户已够用或现实信息更重要时，选`止`。
 
