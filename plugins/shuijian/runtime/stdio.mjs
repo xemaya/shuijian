@@ -20021,6 +20021,7 @@ var LedgerStore = class {
     }
     patch.consentChanged = beforeConsent.mayChallenge !== draft.consents.mayChallenge || beforeConsent.mayGoDeeper !== draft.consents.mayGoDeeper;
     const mutation = input.mutate(draft, patch);
+    this.assertClaimProvenance(draft);
     const trace = {
       method: input.method,
       requestId,
@@ -20152,6 +20153,39 @@ var LedgerStore = class {
       );
     }
     return claim;
+  }
+  assertClaimProvenance(ledger) {
+    const claimsById = new Map(ledger.claims.map((claim) => [claim.id, claim]));
+    for (const claim of ledger.claims) {
+      for (const sourceId of claim.derivedFrom) {
+        if (sourceId === claim.id || !claimsById.has(sourceId)) {
+          throw new ToolFault(
+            "INSUFFICIENT_SOURCE_TRACE",
+            "\u8FD9\u53E5\u8BDD\u7684\u6765\u8DEF\u8FD8\u6CA1\u6709\u63A5\u5B8C\u6574\u3002",
+            "Retry the same tool with every claim referenced by derivedFrom included in the current ledger or in this call. When recovering a session, never keep IDs from an expired ledger without reconstructing their source claims.",
+            true
+          );
+        }
+      }
+    }
+    const visiting = /* @__PURE__ */ new Set();
+    const visited = /* @__PURE__ */ new Set();
+    const visit = (claimId) => {
+      if (visited.has(claimId)) return;
+      if (visiting.has(claimId)) {
+        throw new ToolFault(
+          "INSUFFICIENT_SOURCE_TRACE",
+          "\u8FD9\u4E9B\u8BDD\u4E92\u76F8\u7ED5\u6210\u4E86\u4E00\u5708\uFF0C\u8FD8\u627E\u4E0D\u5230\u8D77\u70B9\u3002",
+          "Retry the same tool with an acyclic derivedFrom chain grounded in reported events, quotes, lived experience, real constraints, or explicit unknowns.",
+          true
+        );
+      }
+      visiting.add(claimId);
+      for (const sourceId of claimsById.get(claimId)?.derivedFrom ?? []) visit(sourceId);
+      visiting.delete(claimId);
+      visited.add(claimId);
+    };
+    for (const claimId of claimsById.keys()) visit(claimId);
   }
   resolveRecord(sessionId) {
     if (sessionId) {

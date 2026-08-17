@@ -7,7 +7,7 @@
 - `claims`：区分 `reported_event`、`reported_quote`、`lived_experience`、`interpretation`、`evaluation`、`prediction`、`hidden_rule`、`identity_binding`、`real_constraint`、`unknown`。
 - `sourceMessageRef`：可用宿主回合编号或稳定引用；没有时不要虚构。
 - `userConfirmed`：只有用户明确确认过才为 `true`。
-- `proposedMove`：一句话、一个动作；提问类必须只有一个问号。
+- `proposedMove`：一个动作，最多两小段；先用一句普通话承认具体处境，再用两三句短句完成动作。不要用“实际发生的是”“目前能确定的是”“你接上去的故事是”作标签，也不要用冒号或分号把分类标签和情绪词堆在一起。提问类必须只有一个问号。
 
 ## 相邻 Tool 的分界
 
@@ -31,3 +31,10 @@
 - `止`：`pause`或`close`
 
 不要使用诊断、身份定性、通用鸡汤、佛学标签。`拆`不能替用户回答；`止`不能带新问题。
+
+## 会话恢复
+
+- 同一任务复用固定的 state 文件，并优先带回上一结果的 `sessionId`与`ledgerVersion`。
+- 收到 `SESSION_NOT_FOUND`时，只静默恢复一次：省略旧会话字段，并把当前所有 `derivedFrom`引用的来源 claim 一并放入重试输入。
+- 不得把旧会话中的 claim ID 单独带进新会话；恢复输入必须形成完整、无环的来源链。
+- 不向用户解释缓存、路径、TTL、版本或恢复重试。
