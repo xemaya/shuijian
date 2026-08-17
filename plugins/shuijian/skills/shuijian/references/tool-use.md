@@ -27,7 +27,7 @@ runner 没有 `--help`命令。不要运行 `--help`，也不要读取或 grep `
 - `illuminate_event`：`claims`必填，`focusField? = quote | event | time | impact | unknown`，`focusEvent?`；`kind = clarify`。
 - `locate_dwelling`：`claims`必填；`kind = reflect_chain | ask_permission`。
 - `deconstruct_claim`：`targetClaim`、`supportingClaims`、`allowedInterventions`必填；`kind = ask_one_question`。`allowedInterventions`可选值：`change_subject | change_time | change_scale | alternative_explanation | boundary_counterexample | reverse_test | identity_separation | responsibility_split`。
-- `verify_evidence`：`targetClaim`、`evidenceState`必填；`evidenceFor`、`evidenceAgainst`、`realConstraints`、`unknowns`传数组；`kind = state_uncertainty | clarify | reflect_chain`。
+- `verify_evidence`：`targetClaim`、`evidenceState`必填；`evidenceFor`、`evidenceAgainst`、`realConstraints`、`unknowns`传数组；`kind = state_uncertainty | clarify | reflect_chain`。它没有顶层 `claims`字段；`targetClaim.derivedFrom`引用的来源 claim 必须放进上述四个数组之一。
 - `cut_narrative_chain`：`claims`、`edges`、`supportedUntilClaimId`、`pauseAfterClaimId`必填；edge 为`{ id?, fromClaimId, toClaimId, relation, evidenceState, cutStatus? }`；`kind = reflect_chain | pause`。
 - `loosen_identity`：`identityClaim`、`userInitiatedQuestion`必填；`kind = ask_one_question | pause`。
 - `surface_next_response`：`claims`传数组，`responses`必填且为 1–3 个`{ kind, text }`；response kind 可选`action | rest | conversation | boundary | information | wait | no_decision`；`proposedMove.kind = surface_options`。
